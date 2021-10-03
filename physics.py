@@ -1,5 +1,4 @@
 import math
-from math_add import *
 
 class Physics:
     # mathematic 
@@ -351,7 +350,7 @@ class Physics:
 
     @classmethod
     def frequency_by_turns(cls, turns_count, turnaround_time):
-        """Calculater frequency by turns any turnaround time
+        """Calculater frequency by turns and turnaround time
         
         Arguments
         ~~~~~~~~~
@@ -360,5 +359,59 @@ class Physics:
             turns count of object in certain time
             :class:`int` || :class:`float`
 
-        turnaround_time
+        turnaround_time: [c]
+            time of object turn around circle
+            :class:`int` || :class:`float`
+
+        Return
+        ~~~~~~
+
+        frequency: [Гц]
+            :class:`int` || :class:`float`
         """
+
+        return f'{turns_count / turnaround_time} Гц'
+
+    @classmethod
+    def frequency_by_period(cls, period):
+        """Calculater frequency by period
+                
+        Arguments
+        ~~~~~~~~~
+
+        period: [с]
+            object turned time per one turnover
+            :class:`int` || :class:`float`
+
+        Return
+        ~~~~~~
+
+        frequency: [Гц]
+            :class:`int` || :class:`float`
+        """
+
+        return f'{1 / period} Гц'
+
+    @classmethod 
+    def period_by_turns(cls, turnaround_time, turns_count):
+        """Calculater period by turns and turnaround time
+        
+        Arguments
+        ~~~~~~~~~
+
+        turnaround_time: [c]
+            time of object turn around circle
+            :class:`int` || :class:`float`
+
+        turns_count: [число]
+            turns count of object in certain time
+            :class:`int` || :class:`float`
+
+        Return
+        ~~~~~~
+
+        period: [с]
+            :class:`int` || :class:`float`
+        """
+
+        return f'{turnaround_time / turns_count} c'
