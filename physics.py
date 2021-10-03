@@ -1,10 +1,30 @@
 import math
+import re
+
+class Result:
+    def __init__(self, value, unit):
+        self.value = value
+        self.unit = unit
+        self.result = f'{value} {unit}'
+
+    @property
+    def __repr__(self):
+        return f'<Result < result: {self.result} > value = {self.value}, unit = {self.unit}>'
+
+    def __str__(self):
+        return self.result
+
+    def toValue(self):
+        """
+        Interpretates result to int or float value
+        """
+        return self.value
 
 class Physics:
     # mathematic 
     pi = 3.1415926535897932384626433832795028841971
 
-    # basic
+    # basic constants
     g = 9.81
     c = 2.99792458e8
     G = 6.67430151515151515e-11
@@ -33,7 +53,6 @@ class Physics:
 
     # coefficents
     asphalt_friction_coefficient = 0.7
-
     
     # formulas
     @classmethod
@@ -44,11 +63,11 @@ class Physics:
         ~~~~~~~~~
 
         weight: `[кг]`
-            weight of object\n
+            weight of object
             :class:`int` || :class:`float`
 
         volume: `[м^3]`
-            object's volume\n
+            object's volume
             :class:`int` || :class:`float`
 
         Return
@@ -58,7 +77,7 @@ class Physics:
             density of object
             :class:`int` || :class:`float`
         """
-        return f'{weight / volume :g} кг/м^3'
+        return Result(weight / volume, 'кг/см^3')
 
     # MOVING OF OBJECTS
     # ====================================================================================
@@ -87,7 +106,7 @@ class Physics:
             :class:`int` || :class:`float`
         """
 
-        return f'{full_movement / full_time :g} м/с'
+        return Result(full_movement / full_time, 'м/с')
 
     @classmethod
     def average_speed_by_speed(cls, speed, start_speed):
@@ -112,7 +131,7 @@ class Physics:
             :class:`int` || :class:`float`
         """
 
-        return f'{(speed + start_speed) / 2 :g} м/с'
+        return Result((speed + start_speed) / 2, 'м/с')
 
     @classmethod
     def straight_motion(cls, speed, time):
@@ -137,7 +156,7 @@ class Physics:
             :class:`int` || :class:`float`
         """
         
-        return f'{speed * time :g} м'
+        return Result(speed * time, 'м')
 
     @classmethod
     def acceleration_by_speeds(cls, speed, start_speed, time):
@@ -168,7 +187,7 @@ class Physics:
 
         acceleration = (speed - start_speed) / time
 
-        return f'{acceleration :g} м/с^2'
+        return Result(acceleration, 'м/с^2')
 
     @classmethod
     def movement_by_start_speed(cls, start_speed, time, acceleration):
@@ -203,7 +222,7 @@ class Physics:
 
         moving = (start_speed * time) + (acceleration * (time ** 2) * 0.5)
 
-        return f'{moving :g} м'
+        return Result(moving, 'м')
 
     @classmethod
     def movement_by_speeds(cls, speed, start_speed, accelerate):
@@ -234,7 +253,7 @@ class Physics:
 
         moving = ((speed ** 2) - (start_speed ** 2)) / (2 * accelerate)
 
-        return f'{moving :g} м'
+        return Result(moving, 'м')
 
     @classmethod
     def braking_distance(cls, speed):
@@ -257,7 +276,7 @@ class Physics:
 
         moving = (speed ** 2) / (2 * cls.g * cls.asphalt_friction_coefficient)
 
-        return f'{moving :g} м'
+        return Result(moving, 'м')
 
     # END
     # ====================================================================================
@@ -290,7 +309,7 @@ class Physics:
 
         speed = math.sqrt(2 * cls.g * height)
 
-        return f'{speed :g} м/с'
+        return Result(speed, 'м/с')
 
     @classmethod
     def falling_time(cls, height):
@@ -313,7 +332,7 @@ class Physics:
 
         time = math.sqrt(2 * height / cls.g)
 
-        return f'{time :g} с'
+        return Result(time, 'с')
 
     @classmethod
     def falling_height(cls, falling_speed):
@@ -336,7 +355,7 @@ class Physics:
 
         height = (falling_speed ** 2) / (2 * cls.g)
 
-        return f'{height :g} м'
+        return Result(height, 'м')
 
     # END
     # ====================================================================================
@@ -370,7 +389,7 @@ class Physics:
             :class:`int` || :class:`float`
         """
 
-        return f'{turns_count / turnaround_time} Гц'
+        return Result(turns_count / turnaround_time, 'Гц')
 
     @classmethod
     def frequency_by_period(cls, period):
@@ -390,7 +409,7 @@ class Physics:
             :class:`int` || :class:`float`
         """
 
-        return f'{1 / period} Гц'
+        return Result(1 / period, 'Гц')
 
     @classmethod 
     def period_by_turns(cls, turnaround_time, turns_count):
@@ -414,4 +433,24 @@ class Physics:
             :class:`int` || :class:`float`
         """
 
-        return f'{turnaround_time / turns_count} c'
+        return Result(turnaround_time / turns_count, 'с')
+
+    @classmethod
+    def period_by_frequency(cls, frequency):
+        """Calculater period by frequency
+                
+        Arguments
+        ~~~~~~~~~
+
+        frequency: [Гц]
+            object's frequency
+            :class:`int` || :class:`float`
+
+        Return
+        ~~~~~~
+
+        period: [с]
+            :class:`int` || :class:`float`
+        """
+
+        return Result(1 / frequency, 'с')
