@@ -3,13 +3,13 @@ import re
 
 class Result:
     def __init__(self, value, unit):
-        self.value = value
+        self.__value__ = value
         self.unit = unit
         self.result = f'{value} {unit}'
 
     @property
     def __repr__(self):
-        return f'<Result < result: {self.result} > value = {self.value}, unit = {self.unit}>'
+        return f'<Result < result: {self.result} > value = {self.__value__}, unit = {self.unit}>'
 
     def __str__(self):
         return self.result
@@ -18,7 +18,7 @@ class Result:
         """
         Interpretates result to int or float value
         """
-        return self.value
+        return self.__value__
 
 class Physics:
     # mathematic 
